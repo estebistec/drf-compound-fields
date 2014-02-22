@@ -19,7 +19,7 @@ drf-compound-fields
 Django-REST-framework serializer fields for compound types.
 
 * Free software: BSD license
-* `Documentation: <http://drf-compound-fields.rtfd.org>`_ (coming soon!)
+* `Documentation: <http://drf-compound-fields.rtfd.org>`_
 * `Source code <https://github.com/estebistec/drf-compound-fields>`_
 * `Issue tracker <https://github.com/estebistec/drf-compound-fields/issues>`_
 * `CI server <https://travis-ci.org/estebistec/drf-compound-fields>`_
