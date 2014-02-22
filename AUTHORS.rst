@@ -5,7 +5,7 @@ Credits
 Development Lead
 ----------------
 
-* Steven Cummings <cummingscs@gmail.com>
+* Steven Cummings <cummingscs@gmail.com> (estebistec on freenode)
 
 Contributors
 ------------

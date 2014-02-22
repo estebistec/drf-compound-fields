@@ -11,11 +11,20 @@ drf_compound_fields
 .. image:: https://pypip.in/d/drf-compound-fields/badge.png
         :target: https://crate.io/packages/drf-compound-fields?version=latest
 
+.. image:: https://coveralls.io/repos/estebistec/drf-compound-fields/badge.png?branch=master
+   :target: https://coveralls.io/r/estebistec/drf-compound-fields?branch=master
+   :alt: Test coverage
+
 
 Django-REST-framework serializer fields for compound types.
 
 * Free software: BSD license
-* Documentation: http://drf-compound-fields.rtfd.org. (coming soon!)
+* `Documentation: <http://drf-compound-fields.rtfd.org>`_ (coming soon!)
+* `Source code <https://github.com/estebistec/drf-compound-fields>`_
+* `Issue tracker <https://github.com/estebistec/drf-compound-fields/issues>`_
+* `CI server <https://travis-ci.org/estebistec/drf-compound-fields>`_
+* IRC: no channel but see AUTHORS for individual nicks on freenode.
+* Mailing list: None yet, but please log an `issue <https://github.com/estebistec/drf-compound-fields/issues>`_ if you want to have discussions about this package.
 
 Features
 --------
