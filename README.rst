@@ -2,20 +2,20 @@
 drf_compound_fields
 ===================
 
-.. image:: https://badge.fury.io/py/drf_compound_fields.png
-    :target: http://badge.fury.io/py/drf_compound_fields
+.. image:: https://badge.fury.io/py/drf-compound-fields.png
+    :target: http://badge.fury.io/py/drf-compound-fields
     
-.. image:: https://travis-ci.org/estebistec/drf_compound_fields.png?branch=master
-        :target: https://travis-ci.org/estebistec/drf_compound_fields
+.. image:: https://travis-ci.org/estebistec/drf-compound-fields.png?branch=master
+        :target: https://travis-ci.org/estebistec/drf-compound-fields
 
-.. image:: https://pypip.in/d/drf_compound_fields/badge.png
-        :target: https://crate.io/packages/drf_compound_fields?version=latest
+.. image:: https://pypip.in/d/drf-compound-fields/badge.png
+        :target: https://crate.io/packages/drf-compound-fields?version=latest
 
 
 Django-REST-framework serializer fields for compound types.
 
 * Free software: BSD license
-* Documentation: http://drf_compound_fields.rtfd.org. (coming soon!)
+* Documentation: http://drf-compound-fields.rtfd.org. (coming soon!)
 
 Features
 --------
