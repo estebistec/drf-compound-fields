@@ -1,5 +1,5 @@
 ===================
-drf_compound_fields
+drf-compound-fields
 ===================
 
 .. image:: https://badge.fury.io/py/drf-compound-fields.png
