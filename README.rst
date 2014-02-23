@@ -50,11 +50,9 @@ These fields represent compound datatypes, which build on other fields with some
 
     Dictionary keys are presumed to be character strings or convertible to such, and so during processing are casted to `unicode`. If
     necessary, options for unicode conversion (such as the encoding, or error processing) can be provided to a `DictField`. For more info,
-    see [py_unicode].
+    see the `Python Unicode HOWTO <http://docs.python.org/2/howto/unicode.html>`_.
 
     **Signature:** `DictField(value_field=None, unicode_options=None)`
 
     If given, unicode_options must be a dict providing options per the [unicode](http://docs.python.org/2/library/functions.html#unicode)
     function.
-
-[py_unicode]: http://docs.python.org/2/howto/unicode.html
