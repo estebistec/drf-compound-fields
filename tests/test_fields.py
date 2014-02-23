@@ -25,6 +25,7 @@ import unittest
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from rest_framework import ISO_8601
+from rest_framework.compat import six
 from rest_framework.fields import CharField
 from rest_framework.fields import DateField
 
@@ -93,6 +94,18 @@ class TestListField(unittest.TestCase):
         """
         field = ListField()
         self.assertRaises(ValidationError, field.validate, 'notAList')
+
+    def test_errors_non_list(self):
+        """
+        When a ListField is given a non-list value, then there should be one error related to the
+        type mismatch.
+        """
+        field = ListField()
+        try:
+            field.validate('notAList')
+            self.fail('Expected ValidationError')
+        except ValidationError as e:
+            self.assertTrue(isinstance(e.message, six.text_type))
 
     def test_validate_empty_list(self):
         """
