@@ -37,6 +37,7 @@ class ListField(WritableField):
         return obj
 
     def from_native(self, data):
+        self.validate_is_list(data)
         if self.item_field and data:
             return [
                 self.item_field.from_native(item_data)
@@ -47,8 +48,7 @@ class ListField(WritableField):
     def validate(self, value):
         super(ListField, self).validate(value)
 
-        if not isinstance(value, list):
-            raise ValidationError(self.error_messages['invalid_type'] % {'value': value})
+        self.validate_is_list(value)
 
         if self.item_field:
             errors = {}
@@ -61,6 +61,10 @@ class ListField(WritableField):
 
             if errors:
                 raise ValidationError(errors)
+
+    def validate_is_list(self, value):
+        if not isinstance(value, list):
+            raise ValidationError(self.error_messages['invalid_type'] % {'value': value})
 
 
 class DictField(WritableField):
