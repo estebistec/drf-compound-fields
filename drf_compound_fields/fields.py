@@ -131,3 +131,32 @@ class DictField(WritableField):
                 code='invalid_type',
                 params={'value': value}
             )
+
+
+class PartialDictField(DictField):
+    """
+    A field that is similar to DictField but only include part of values
+    """
+
+    def __init__(self, included_keys, value_field=None, unicode_options=None,
+                 *args, **kwargs):
+        self.included_keys = included_keys
+        super(PartialDictField, self).__init__(value_field, unicode_options,
+                                               *args, **kwargs)
+
+    def to_native(self, obj):
+        if self.value_field and obj:
+            return dict(
+                (six.text_type(key, **self.unicode_options), self.value_field.to_native(value))
+                for key, value in obj.items() if key in self.included_keys
+            )
+        return obj
+
+    def from_native(self, data):
+        if self.value_field and data:
+            return dict(
+                (six.text_type(key, **self.unicode_options), self.value_field.from_native(value))
+                for key, value in data.items() if key in self.included_keys
+            )
+        return data
+
