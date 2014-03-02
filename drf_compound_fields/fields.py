@@ -146,12 +146,12 @@ class PartialDictField(DictField):
 
     def to_native(self, obj):
         return super(PartialDictField, self).to_native(
-            {key: val for key, val in obj.iteritems()
-             if key in self.included_keys}
+            {k: v for k, v in six.iteritems(obj)
+             if k in self.included_keys}
         )
 
     def from_native(self, data):
         return super(PartialDictField, self).from_native(
-            {key: val for key, val in data.iteritems()
-             if key in self.included_keys}
+            {k: v for k, v in six.iteritems(data)
+             if k in self.included_keys}
         )
