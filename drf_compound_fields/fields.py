@@ -145,18 +145,13 @@ class PartialDictField(DictField):
                                                *args, **kwargs)
 
     def to_native(self, obj):
-        if self.value_field and obj:
-            return dict(
-                (six.text_type(key, **self.unicode_options), self.value_field.to_native(value))
-                for key, value in obj.items() if key in self.included_keys
-            )
-        return obj
+        return super(PartialDictField, self).to_native(
+            {key: val for key, val in obj.iteritems()
+             if key in self.included_keys}
+        )
 
     def from_native(self, data):
-        if self.value_field and data:
-            return dict(
-                (six.text_type(key, **self.unicode_options), self.value_field.from_native(value))
-                for key, value in data.items() if key in self.included_keys
-            )
-        return data
-
+        return super(PartialDictField, self).from_native(
+            {key: val for key, val in data.iteritems()
+             if key in self.included_keys}
+        )
