@@ -38,20 +38,22 @@ class TestSerializerListField(unittest.TestCase):
 
     def test_non_list(self):
         serializer = self.Serializer(data={'emails': 'notAList'})
-        self.assertFalse(serializer.is_valid(), 'Non-list value allowed')
-        self.assertIn('emails', serializer.errors, 'No error for non-list value')
-        self.assertTrue(serializer.errors['emails'], 'Empty error for non-list value')
+        self.assertFalse(serializer.is_valid(), 'Non-list value should not be allowed')
+        self.assertIn('emails', serializer.errors, 'Non-list value should produce a field error')
+        self.assertTrue(serializer.errors['emails'], 'Non-list value error should be non-empty')
 
     def test_invalid_list_item(self):
         serializer = self.Serializer(data={'emails': ['some.where@out.there', 'notAnEmail']})
-        self.assertFalse(serializer.is_valid(), 'Invalid list-item allowed')
-        self.assertIn('emails', serializer.errors, 'No error for invalid list-item')
-        self.assertTrue(serializer.errors['emails'], 'Empty error for invalid list-item {}'.format(
-                serializer.errors['emails']))
+        self.assertFalse(serializer.is_valid(), 'Invalid list-item should not be allowed')
+        self.assertIn('emails', serializer.errors,
+                'Invalid list-item should produce a field error')
+        self.assertTrue(serializer.errors['emails'],
+                'Invalid list-item error should be non-empty {}'.format(
+                        serializer.errors['emails']))
 
     def test_empty_list(self):
         serializer = self.Serializer(data={'emails': []})
-        self.assertTrue(serializer.is_valid())
+        self.assertTrue(serializer.is_valid(), 'Empty list should be allowed')
 
     def test_valid_list(self):
         serializer = self.Serializer(data={'emails': ['some.where@out.there']})

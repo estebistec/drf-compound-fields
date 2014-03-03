@@ -105,7 +105,7 @@ class TestListField(unittest.TestCase):
             field.validate('notAList')
             self.fail('Expected ValidationError')
         except ValidationError as e:
-            self.assertTrue(isinstance(e.message, six.text_type))
+            self.assertEqual('notAList is not a list', e.messages[0])
 
     def test_validate_empty_list(self):
         """

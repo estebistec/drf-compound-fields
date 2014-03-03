@@ -21,7 +21,7 @@ class ListField(WritableField):
     """
 
     default_error_messages = {
-        'invalid_type': _('%(value)s is not a list.'),
+        'invalid_type': _('%(value)s is not a list'),
     }
     empty = []
 
@@ -58,14 +58,15 @@ class ListField(WritableField):
                     self.item_field.run_validators(item)
                     self.item_field.validate(item)
                 except ValidationError as e:
-                    errors[index] = e
+                    e.params = {}
+                    errors[index] = [e]
 
             if errors:
                 raise ValidationError(errors)
 
     def validate_is_list(self, value):
         if not isinstance(value, list):
-            raise ValidationError(self.error_messages['invalid_type'] % {'value': value})
+            raise ValidationError(self.error_messages['invalid_type'], params={'value': value})
 
 
 class DictField(WritableField):
@@ -75,13 +76,14 @@ class DictField(WritableField):
     """
 
     default_error_messages = {
-        'invalid_type': _('%(value)s is not a dict.'),
+        'invalid_type': _('%(value)s is not a dict'),
     }
+    default_unicode_options = {}
 
     def __init__(self, value_field=None, unicode_options=None, *args, **kwargs):
         super(DictField, self).__init__(*args, **kwargs)
         self.value_field = value_field
-        self.unicode_options = unicode_options or {}
+        self.unicode_options = unicode_options or self.default_unicode_options
 
     def to_native(self, obj):
         if self.value_field and obj:
@@ -112,11 +114,12 @@ class DictField(WritableField):
                     self.value_field.run_validators(v)
                     self.value_field.validate(v)
                 except ValidationError as e:
-                    errors[k] = e
+                    e.params = {}
+                    errors[k] = [e]
 
             if errors:
                 raise ValidationError(errors)
 
     def validate_is_dict(self, value):
         if not isinstance(value, dict):
-            raise ValidationError(self.error_messages['invalid_type'] % {'value': value})
+            raise ValidationError(self.error_messages['invalid_type'], params={'value': value})
