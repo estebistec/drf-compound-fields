@@ -66,7 +66,8 @@ class ListField(WritableField):
 
     def validate_is_list(self, value):
         if not isinstance(value, list):
-            raise ValidationError(self.error_messages['invalid_type'], params={'value': value})
+            raise ValidationError(self.error_messages['invalid_type'], code='invalid_type',
+                    params={'value': value})
 
 
 class DictField(WritableField):
@@ -79,6 +80,7 @@ class DictField(WritableField):
         'invalid_type': _('%(value)s is not a dict'),
     }
     default_unicode_options = {}
+    empty = {}
 
     def __init__(self, value_field=None, unicode_options=None, *args, **kwargs):
         super(DictField, self).__init__(*args, **kwargs)
@@ -122,4 +124,5 @@ class DictField(WritableField):
 
     def validate_is_dict(self, value):
         if not isinstance(value, dict):
-            raise ValidationError(self.error_messages['invalid_type'], params={'value': value})
+            raise ValidationError(self.error_messages['invalid_type'],  code='invalid_type',
+                    params={'value': value})

@@ -48,7 +48,10 @@ class TestSerializerListField(unittest.TestCase):
         self.assertIn('emails', serializer.errors,
                 'Invalid list-item should produce a field error')
         self.assertTrue(serializer.errors['emails'],
-                'Invalid list-item error should be non-empty {}'.format(
+                'Invalid list-item errors should be non-empty {}'.format(
+                        serializer.errors['emails']))
+        self.assertTrue([error for error in serializer.errors['emails'] if error],
+                'Invalid dict-value errors should each be non-empty {}'.format(
                         serializer.errors['emails']))
 
     def test_empty_list(self):
@@ -57,4 +60,40 @@ class TestSerializerListField(unittest.TestCase):
 
     def test_valid_list(self):
         serializer = self.Serializer(data={'emails': ['some.where@out.there']})
-        self.assertTrue(serializer.is_valid())
+        self.assertTrue(serializer.is_valid(), 'Valid list should be allowed')
+
+
+class TestSerializerDictField(unittest.TestCase):
+    """
+    Tests for the DictField behavior in a declared serializer.
+    """
+
+    class Serializer(serializers.Serializer):
+        emails = DictField(serializers.EmailField(), required=False)
+
+    def test_non_dict(self):
+        serializer = self.Serializer(data={'emails': 'notADict'})
+        self.assertFalse(serializer.is_valid(), 'Non-dict value should not be allowed')
+        self.assertIn('emails', serializer.errors, 'Non-dict value should produce a field error')
+        self.assertTrue(serializer.errors['emails'], 'Non-dict value error should be non-empty')
+
+    def test_invalid_dict_value(self):
+        serializer = self.Serializer(data={'emails': {'a': 'some.where@out.there',
+                'b': 'notAnEmail'}})
+        self.assertFalse(serializer.is_valid(), 'Invalid dict-value should not be allowed')
+        self.assertIn('emails', serializer.errors,
+                'Invalid dict-value should produce a field error')
+        self.assertTrue(serializer.errors['emails'],
+                'Invalid dict-value errors should be non-empty {}'.format(
+                        serializer.errors['emails']))
+        self.assertTrue([error for error in serializer.errors['emails'] if error],
+                'Invalid dict-value errors should each be non-empty {}'.format(
+                        serializer.errors['emails']))
+
+    def test_empty_dict(self):
+        serializer = self.Serializer(data={'emails': {}})
+        self.assertTrue(serializer.is_valid(), 'Empty dict should be allowed')
+
+    def test_valid_dict(self):
+        serializer = self.Serializer(data={'emails': {'a': 'some.where@out.there'}})
+        self.assertTrue(serializer.is_valid(), 'Valid dict shouild be allowed')
