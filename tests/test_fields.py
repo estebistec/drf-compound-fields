@@ -44,7 +44,7 @@ class TestListField(unittest.TestCase):
         un-processed.
         """
         field = ListField()
-        data = range(5)
+        data = list(range(5))
         obj = field.from_native(data)
         self.assertEqual(data, obj)
 
@@ -54,7 +54,7 @@ class TestListField(unittest.TestCase):
         un-processed.
         """
         field = ListField()
-        obj = range(5)
+        obj = list(range(5))
         data = field.to_native(obj)
         self.assertEqual(obj, data)
 
