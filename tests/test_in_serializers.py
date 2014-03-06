@@ -40,7 +40,8 @@ class TestSerializerListField(unittest.TestCase):
     def test_non_list(self):
         serializer = self.Serializer(data={'emails': 'notAList'})
         self.assertFalse(serializer.is_valid(), 'Non-list value should not be allowed')
-        self.assertTrue('emails' in serializer.errors, 'Non-list value should produce a field error')
+        self.assertTrue('emails' in serializer.errors,
+                'Non-list value should produce a field error')
         self.assertTrue(serializer.errors['emails'], 'Non-list value error should be non-empty')
 
     def test_invalid_list_item(self):
@@ -49,7 +50,7 @@ class TestSerializerListField(unittest.TestCase):
         self.assertTrue('emails' in serializer.errors,
                 'Invalid list-item should produce a field error')
         self.assertTrue(serializer.errors['emails'],
-                'Invalid list-item errors should be non-empty {}'.format(
+                'Invalid list-item errors should be non-empty {0}'.format(
                         serializer.errors['emails']))
         self.assertEqual([1], list(six.iterkeys(serializer.errors['emails'][0])))
 
@@ -73,7 +74,8 @@ class TestSerializerDictField(unittest.TestCase):
     def test_non_dict(self):
         serializer = self.Serializer(data={'emails': 'notADict'})
         self.assertFalse(serializer.is_valid(), 'Non-dict value should not be allowed')
-        self.assertTrue('emails' in serializer.errors, 'Non-dict value should produce a field error')
+        self.assertTrue('emails' in serializer.errors,
+                'Non-dict value should produce a field error')
         self.assertTrue(serializer.errors['emails'], 'Non-dict value error should be non-empty')
 
     def test_invalid_dict_value(self):
@@ -83,7 +85,7 @@ class TestSerializerDictField(unittest.TestCase):
         self.assertTrue('emails' in serializer.errors,
                 'Invalid dict-value should produce a field error')
         self.assertTrue(serializer.errors['emails'],
-                'Invalid dict-value errors should be non-empty {}'.format(
+                'Invalid dict-value errors should be non-empty {0}'.format(
                         serializer.errors['emails']))
         self.assertEqual(['b'], list(six.iterkeys(serializer.errors['emails'][0])))
 
