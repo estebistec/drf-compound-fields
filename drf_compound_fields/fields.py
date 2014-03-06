@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework.compat import six
 from rest_framework.fields import WritableField
+from rest_framework.serializers import NestedValidationError
 
 
 class ListField(WritableField):
@@ -58,11 +59,10 @@ class ListField(WritableField):
                     self.item_field.run_validators(item)
                     self.item_field.validate(item)
                 except ValidationError as e:
-                    e.params = {}
-                    errors[index] = [e]
+                    errors[index] = e
 
             if errors:
-                raise ValidationError(errors)
+                raise NestedValidationError(errors)
 
     def validate_is_list(self, value):
         if not isinstance(value, list):
@@ -116,11 +116,10 @@ class DictField(WritableField):
                     self.value_field.run_validators(v)
                     self.value_field.validate(v)
                 except ValidationError as e:
-                    e.params = {}
-                    errors[k] = [e]
+                    errors[k] = e
 
             if errors:
-                raise ValidationError(errors)
+                raise NestedValidationError(errors)
 
     def validate_is_dict(self, value):
         if not isinstance(value, dict):

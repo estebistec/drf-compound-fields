@@ -50,9 +50,7 @@ class TestSerializerListField(unittest.TestCase):
         self.assertTrue(serializer.errors['emails'],
                 'Invalid list-item errors should be non-empty {}'.format(
                         serializer.errors['emails']))
-        self.assertTrue([error for error in serializer.errors['emails'] if error],
-                'Invalid dict-value errors should each be non-empty {}'.format(
-                        serializer.errors['emails']))
+        self.assertEqual([1], serializer.errors['emails'][0].keys())
 
     def test_empty_list(self):
         serializer = self.Serializer(data={'emails': []})
@@ -86,9 +84,7 @@ class TestSerializerDictField(unittest.TestCase):
         self.assertTrue(serializer.errors['emails'],
                 'Invalid dict-value errors should be non-empty {}'.format(
                         serializer.errors['emails']))
-        self.assertTrue([error for error in serializer.errors['emails'] if error],
-                'Invalid dict-value errors should each be non-empty {}'.format(
-                        serializer.errors['emails']))
+        self.assertEqual(['b'], serializer.errors['emails'][0].keys())
 
     def test_empty_dict(self):
         serializer = self.Serializer(data={'emails': {}})
