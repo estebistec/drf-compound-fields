@@ -23,6 +23,7 @@ SECRET_KEY = 's3cr3t'
 import unittest
 
 from rest_framework import serializers
+from rest_framework.compat import six
 
 from drf_compound_fields.fields import DictField
 from drf_compound_fields.fields import ListField
@@ -50,7 +51,7 @@ class TestSerializerListField(unittest.TestCase):
         self.assertTrue(serializer.errors['emails'],
                 'Invalid list-item errors should be non-empty {}'.format(
                         serializer.errors['emails']))
-        self.assertEqual([1], serializer.errors['emails'][0].keys())
+        self.assertEqual([1], list(six.iterkeys(serializer.errors['emails'][0])))
 
     def test_empty_list(self):
         serializer = self.Serializer(data={'emails': []})
@@ -84,7 +85,7 @@ class TestSerializerDictField(unittest.TestCase):
         self.assertTrue(serializer.errors['emails'],
                 'Invalid dict-value errors should be non-empty {}'.format(
                         serializer.errors['emails']))
-        self.assertEqual(['b'], serializer.errors['emails'][0].keys())
+        self.assertEqual(['b'], list(six.iterkeys(serializer.errors['emails'][0])))
 
     def test_empty_dict(self):
         serializer = self.Serializer(data={'emails': {}})

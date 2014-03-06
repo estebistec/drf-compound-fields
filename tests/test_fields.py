@@ -25,7 +25,6 @@ import unittest
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from rest_framework import ISO_8601
-from rest_framework.compat import six
 from rest_framework.fields import CharField
 from rest_framework.fields import DateField
 
