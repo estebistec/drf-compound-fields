@@ -18,7 +18,8 @@ from rest_framework.serializers import NestedValidationError
 class ListField(WritableField):
     """
     A field whose values are lists of items described by the given item field. The item field can
-    be another field type (e.g., CharField) or a serializer.
+    be another field type (e.g., CharField) or a serializer. However, for serializers, you should
+    instead just use it with the `many=True` option.
     """
 
     default_error_messages = {
@@ -71,6 +72,32 @@ class ListField(WritableField):
                 code='invalid_type',
                 params={'value': value}
             )
+
+
+class ListOrItemField(WritableField):
+    """
+    A field whose values are either a value or lists of values described by the given item field.
+    The item field can be another field type (e.g., CharField) or a serializer.
+    """
+
+    def __init__(self, item_field=None, *args, **kwargs):
+        super(ListOrItemField, self).__init__(*args, **kwargs)
+        self.item_field = item_field
+        self.list_field = ListField(item_field)
+
+    def to_native(self, obj):
+        if isinstance(obj, list):
+            return self.list_field.to_native(obj)
+        elif self.item_field and obj:
+            return self.item_field.to_native(obj)
+        return obj
+
+    def from_native(self, data):
+        if isinstance(data, list):
+            return self.list_field.from_native(data)
+        elif self.item_field and data:
+            return self.item_field.from_native(data)
+        return data
 
 
 class DictField(WritableField):
