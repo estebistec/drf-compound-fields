@@ -66,8 +66,11 @@ class ListField(WritableField):
 
     def validate_is_list(self, value):
         if not isinstance(value, list):
-            raise ValidationError(self.error_messages['invalid_type'], code='invalid_type',
-                    params={'value': value})
+            raise ValidationError(
+                self.error_messages['invalid_type'],
+                code='invalid_type',
+                params={'value': value}
+            )
 
 
 class DictField(WritableField):
@@ -123,5 +126,8 @@ class DictField(WritableField):
 
     def validate_is_dict(self, value):
         if not isinstance(value, dict):
-            raise ValidationError(self.error_messages['invalid_type'],  code='invalid_type',
-                    params={'value': value})
+            raise ValidationError(
+                self.error_messages['invalid_type'],
+                code='invalid_type',
+                params={'value': value}
+            )
