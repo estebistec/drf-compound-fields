@@ -43,7 +43,7 @@ class TestListField(unittest.TestCase):
         un-processed.
         """
         field = ListField()
-        data = range(5)
+        data = list(range(5))
         obj = field.from_native(data)
         self.assertEqual(data, obj)
 
@@ -53,7 +53,7 @@ class TestListField(unittest.TestCase):
         un-processed.
         """
         field = ListField()
-        obj = range(5)
+        obj = list(range(5))
         data = field.to_native(obj)
         self.assertEqual(obj, data)
 
@@ -93,6 +93,18 @@ class TestListField(unittest.TestCase):
         """
         field = ListField()
         self.assertRaises(ValidationError, field.validate, 'notAList')
+
+    def test_errors_non_list(self):
+        """
+        When a ListField is given a non-list value, then there should be one error related to the
+        type mismatch.
+        """
+        field = ListField()
+        try:
+            field.validate('notAList')
+            self.fail('Expected ValidationError')
+        except ValidationError as e:
+            self.assertEqual('notAList is not a list', e.messages[0])
 
     def test_validate_empty_list(self):
         """

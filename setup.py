@@ -31,14 +31,14 @@ setup(
     package_dir={'drf_compound_fields': 'drf_compound_fields'},
     include_package_data=True,
     install_requires=[
-       'Django==1.6.2',
-       'djangorestframework==2.3.12'
+        'Django==1.6.2',
+        'djangorestframework==2.3.13'
     ],
     license="BSD",
     zip_safe=False,
-    keywords='drf_compound_fields',
+    keywords='rest_framework rest apis services fields compound',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
@@ -46,7 +46,10 @@ setup(
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: PyPy',
     ],
     test_suite='tests',
 )
