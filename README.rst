@@ -1,7 +1,3 @@
-===================
-drf-compound-fields
-===================
-
 .. image:: https://badge.fury.io/py/drf-compound-fields.png
     :target: http://badge.fury.io/py/drf-compound-fields
 
@@ -15,6 +11,8 @@ drf-compound-fields
    :target: https://coveralls.io/r/estebistec/drf-compound-fields?branch=master
    :alt: Test coverage
 
+Overview
+========
 
 Django-REST-framework serializer fields for compound types.
 
