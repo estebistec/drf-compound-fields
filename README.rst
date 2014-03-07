@@ -54,8 +54,8 @@ These fields represent compound datatypes, which build on other fields with some
 
     **Signature:** `DictField(value_field=None, unicode_options=None)`
 
-    If given, unicode_options must be a dict providing options per the [unicode](http://docs.python.org/2/library/functions.html#unicode)
-    function.
+    If given, unicode_options must be a dict providing options per the
+    `unicode <http://docs.python.org/2/library/functions.html#unicode>`_ function.
 
 `PartialDictField`
     A similar field to `DictField`, but only includes values whose keys are listed in `included_keys`
