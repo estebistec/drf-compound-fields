@@ -4,7 +4,7 @@ drf-compound-fields
 
 .. image:: https://badge.fury.io/py/drf-compound-fields.png
     :target: http://badge.fury.io/py/drf-compound-fields
-    
+
 .. image:: https://travis-ci.org/estebistec/drf-compound-fields.png?branch=master
         :target: https://travis-ci.org/estebistec/drf-compound-fields
 
@@ -60,4 +60,4 @@ These fields represent compound datatypes, which build on other fields with some
 `PartialDictField`
     A similar field to `DictField`, but only includes values whose keys are listed in `included_keys`
 
-    **Signature:** `PartialDictField(included_keys, value_field=None, unicode_options=NOne)`
+    **Signature:** `PartialDictField(included_keys, value_field=None, unicode_options=None)`
