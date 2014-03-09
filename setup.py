@@ -9,26 +9,35 @@ try:
     from setuptools.command.test import test as TestCommand
 
     class PyTest(TestCommand):
+
         def finalize_options(self):
             TestCommand.finalize_options(self)
             self.test_args = []
             self.test_suite = True
+
         def run_tests(self):
             #import here, cause outside the eggs aren't loaded
             import pytest
             errno = pytest.main(self.test_args)
             sys.exit(errno)
+
 except ImportError:
     from distutils.core import setup, Command
 
     class PyTest(Command):
+
         user_options = []
+
         def initialize_options(self):
             pass
+
         def finalize_options(self):
             pass
+
         def run(self):
-            import sys,subprocess
+            import subprocess
+            import sys
+
             errno = subprocess.call([sys.executable, 'runtests.py'])
             raise SystemExit(errno)
 
@@ -59,7 +68,7 @@ setup(
     ],
     test_suite='tests',
     tests_require=['pytest'],
-    cmdclass = {'test': PyTest},
+    cmdclass={'test': PyTest},
     license="BSD",
     keywords='rest_framework rest apis services fields compound',
     classifiers=[
