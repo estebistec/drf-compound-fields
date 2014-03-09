@@ -66,9 +66,8 @@ def test_from_native_with_value_field():
 
 def test_to_native_with_value_field():
     """
-    When a DictField has an value-field, to_native should return a dict of elements resulting
-    from the application of the value-field's to_native method to each value of the input
-    object dict.
+    When a DictField has an value-field, to_native should return a dict of elements resulting from
+    the application of the value-field's to_native method to each value of the input object dict.
     """
     field = DictField(DateField(format=ISO_8601))
     obj = {"a": date(2000, 1, 1), "b": date(2000, 1, 2)}
@@ -119,8 +118,8 @@ def test_validate_elements_valid():
 
 def test_validate_elements_invalid():
     """
-    When a DictField is given a dict containing values that are invalid for the value-field,
-    then validate should raise a ValidationError.
+    When a DictField is given a dict containing values that are invalid for the value-field, then
+    validate should raise a ValidationError.
     """
     field = DictField(CharField(max_length=5))
     with pytest.raises(ValidationError):

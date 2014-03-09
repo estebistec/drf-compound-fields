@@ -43,8 +43,7 @@ def test_from_native_no_item_field():
 
 def test_to_native_no_item_field():
     """
-    When a ListField has no item-field, to_native should return the data it was given
-    un-processed.
+    When a ListField has no item-field, to_native should return the data it was given un-processed.
     """
     field = ListField()
     obj = list(range(5))
@@ -54,9 +53,8 @@ def test_to_native_no_item_field():
 
 def test_from_native_with_item_field():
     """
-    When a ListField has an item-field, from_native should return a list of elements resulting
-    from the application of the item-field's from_native method to each element of the input
-    data list.
+    When a ListField has an item-field, from_native should return a list of elements resulting from
+    the application of the item-field's from_native method to each element of the input data list.
     """
     field = ListField(DateField())
     data = ["2000-01-01", "2000-01-02"]
@@ -66,9 +64,8 @@ def test_from_native_with_item_field():
 
 def test_to_native_with_item_field():
     """
-    When a ListField has an item-field, to_native should return a list of elements resulting
-    from the application of the item-field's to_native method to each element of the input
-    object list.
+    When a ListField has an item-field, to_native should return a list of elements resulting from
+    the application of the item-field's to_native method to each element of the input object list.
     """
     field = ListField(DateField(format=ISO_8601))
     obj = [date(2000, 1, 1), date(2000, 1, 2)]
@@ -97,8 +94,8 @@ def test_validate_non_list():
 
 def test_errors_non_list():
     """
-    When a ListField is given a non-list value, then there should be one error related to the
-    type mismatch.
+    When a ListField is given a non-list value, then there should be one error related to the type
+    mismatch.
     """
     field = ListField()
     try:
@@ -132,8 +129,8 @@ def test_validate_elements_valid():
 
 def test_validate_elements_invalid():
     """
-    When a ListField is given a list containing elements that are invalid for the item-field,
-    then validate should raise a ValidationError.
+    When a ListField is given a list containing elements that are invalid for the item-field, then
+    validate should raise a ValidationError.
     """
     field = ListField(CharField(max_length=5))
     with pytest.raises(ValidationError):
