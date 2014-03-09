@@ -162,7 +162,7 @@ class DictField(WritableField):
 
 class PartialDictField(DictField):
     """
-    A field that is similar to DictField but only include part of values
+    A dict field whose values are filtered to only include values for the specified keys.
     """
 
     def __init__(self, included_keys, value_field=None, unicode_options=None,
@@ -173,12 +173,18 @@ class PartialDictField(DictField):
 
     def to_native(self, obj):
         return super(PartialDictField, self).to_native(
-            dict((k, v) for k, v in six.iteritems(obj)
-             if k in self.included_keys)
+            dict(
+                (k, v)
+                for k, v in six.iteritems(obj)
+                if k in self.included_keys
+            )
         )
 
     def from_native(self, data):
         return super(PartialDictField, self).from_native(
-            dict((k, v) for k, v in six.iteritems(data)
-             if k in self.included_keys)
+            dict(
+                (k, v)
+                for k, v in six.iteritems(data)
+                if k in self.included_keys
+            )
         )
