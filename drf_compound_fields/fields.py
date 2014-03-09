@@ -172,19 +172,19 @@ class PartialDictField(DictField):
                                                *args, **kwargs)
 
     def to_native(self, obj):
-        return super(PartialDictField, self).to_native(
-            dict(
-                (k, v)
-                for k, v in six.iteritems(obj)
-                if k in self.included_keys
-            )
-        )
+        return super(PartialDictField, self).to_native(self._filter_dict(obj))
 
     def from_native(self, data):
-        return super(PartialDictField, self).from_native(
-            dict(
+        return super(PartialDictField, self).from_native(self._filter_dict(data))
+
+    def validate(self, value):
+        super(PartialDictField, self).validate(self._filter_dict(value))
+
+    def _filter_dict(self, value):
+        if isinstance(value, dict):
+            return dict(
                 (k, v)
-                for k, v in six.iteritems(data)
+                for k, v in six.iteritems(value)
                 if k in self.included_keys
             )
-        )
+        return value
