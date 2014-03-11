@@ -60,7 +60,7 @@ class ListField(WritableField):
                     self.item_field.run_validators(item)
                     self.item_field.validate(item)
                 except ValidationError as e:
-                    errors[index] = e
+                    errors[index] = e.messages
 
             if errors:
                 raise NestedValidationError(errors)
@@ -154,7 +154,7 @@ class DictField(WritableField):
                     self.value_field.run_validators(v)
                     self.value_field.validate(v)
                 except ValidationError as e:
-                    errors[k] = e
+                    errors[k] = e.messages
 
             if errors:
                 raise NestedValidationError(errors)
