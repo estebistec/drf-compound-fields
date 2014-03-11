@@ -40,6 +40,11 @@ These fields represent compound datatypes, which build on other fields with some
 
     **Signature:** `ListField(item_field=None)`
 
+`ListOrItemField`
+    A field that accepts a value or list of values described by a given item field.
+
+    **Signature:** `ListOrItemField(item_field=None)`
+
 `DictField`
     A dictionary representation, whose values are described by a given value field. This means that all values must meet the definition of
     that field. The value field can be another field type (e.g., CharField) or a serializer. If `value_field` is not given, then the `dict`
@@ -56,6 +61,6 @@ These fields represent compound datatypes, which build on other fields with some
     `unicode <http://docs.python.org/2/library/functions.html#unicode>`_ function.
 
 `PartialDictField`
-    A similar field to `DictField`, but only includes values whose keys are listed in `included_keys`
+    A dict field whose values are filtered to only include values for the specified keys.
 
     **Signature:** `PartialDictField(included_keys, value_field=None, unicode_options=None)`

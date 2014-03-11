@@ -18,7 +18,8 @@ from rest_framework.serializers import NestedValidationError
 class ListField(WritableField):
     """
     A field whose values are lists of items described by the given item field. The item field can
-    be another field type (e.g., CharField) or a serializer.
+    be another field type (e.g., CharField) or a serializer. However, for serializers, you should
+    instead just use it with the `many=True` option.
     """
 
     default_error_messages = {
@@ -71,6 +72,40 @@ class ListField(WritableField):
                 code='invalid_type',
                 params={'value': value}
             )
+
+
+class ListOrItemField(WritableField):
+    """
+    A field whose values are either a value or lists of values described by the given item field.
+    The item field can be another field type (e.g., CharField) or a serializer.
+    """
+
+    def __init__(self, item_field=None, *args, **kwargs):
+        super(ListOrItemField, self).__init__(*args, **kwargs)
+        self.item_field = item_field
+        self.list_field = ListField(item_field)
+
+    def to_native(self, obj):
+        if isinstance(obj, list):
+            return self.list_field.to_native(obj)
+        elif self.item_field:
+            return self.item_field.to_native(obj)
+        return obj
+
+    def from_native(self, data):
+        if isinstance(data, list):
+            return self.list_field.from_native(data)
+        elif self.item_field:
+            return self.item_field.from_native(data)
+        return data
+
+    def validate(self, value):
+        super(ListOrItemField, self).validate(value)
+        if isinstance(value, list):
+            self.list_field.validate(value)
+        elif self.item_field:
+            self.item_field.run_validators(value)
+            self.item_field.validate(value)
 
 
 class DictField(WritableField):
@@ -135,7 +170,7 @@ class DictField(WritableField):
 
 class PartialDictField(DictField):
     """
-    A field that is similar to DictField but only include part of values
+    A dict field whose values are filtered to only include values for the specified keys.
     """
 
     def __init__(self, included_keys, value_field=None, unicode_options=None,
@@ -145,13 +180,19 @@ class PartialDictField(DictField):
                                                *args, **kwargs)
 
     def to_native(self, obj):
-        return super(PartialDictField, self).to_native(
-            dict((k, v) for k, v in six.iteritems(obj)
-             if k in self.included_keys)
-        )
+        return super(PartialDictField, self).to_native(self._filter_dict(obj))
 
     def from_native(self, data):
-        return super(PartialDictField, self).from_native(
-            dict((k, v) for k, v in six.iteritems(data)
-             if k in self.included_keys)
-        )
+        return super(PartialDictField, self).from_native(self._filter_dict(data))
+
+    def validate(self, value):
+        super(PartialDictField, self).validate(self._filter_dict(value))
+
+    def _filter_dict(self, value):
+        if isinstance(value, dict):
+            return dict(
+                (k, v)
+                for k, v in six.iteritems(value)
+                if k in self.included_keys
+            )
+        return value
