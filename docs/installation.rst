@@ -4,9 +4,9 @@ Installation
 
 At the command line::
 
-    $ easy_install drf_compound_fields
+    $ easy_install drf-compound-fields
 
 Or, if you have virtualenvwrapper installed::
 
-    $ mkvirtualenv drf_compound_fields
-    $ pip install drf_compound_fields
+    $ mkvirtualenv drf-compound-fields
+    $ pip install drf-compound-fields
