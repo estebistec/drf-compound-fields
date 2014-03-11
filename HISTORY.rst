@@ -6,6 +6,7 @@ History
 0.2.0 (2014-03-10)
 ++++++++++++++++++
 
+* Collect messages of nested errors, instead of error objects (#12)
 * Add ListOrItemField type (#5, #11)
 * Fix PartialDictField validation and handling of badly-typed values
 * Switch project tests to py.test (#10)
