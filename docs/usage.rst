@@ -7,7 +7,9 @@ The following sections explain how and when you would use each of the provided f
 `ListField`
 -----------
 
-**Signature:** `ListField(item_field=None)`
+**Signature**::
+
+    ListField(item_field=None)
 
 Use this field to create lists of simple types. If the item field is not given, then values are
 passed through as-is.
@@ -60,7 +62,9 @@ it is recommended that you stick with this method.
 `ListOrItemField`
 -----------------
 
-**Signature:** `ListOrItemField(item_field=None)`
+**Signature**::
+
+    ListOrItemField(item_field=None)
 
 A field whose values are either a value or lists of values described by the given item field. If
 the item field is not given, then values are passed through as-is.
@@ -119,7 +123,9 @@ Output::
 `DictField`
 -----------
 
-**Signature:** `DictField(value_field=None, unicode_options=None)`
+**Signature**::
+
+	DictField(value_field=None, unicode_options=None)
 
 A field whose values are dicts of values described by the given value field. The value field
 can be another field type (e.g., CharField) or a serializer.
@@ -140,7 +146,9 @@ see the `Python Unicode HOWTO <http://docs.python.org/2/howto/unicode.html>`_.
 `PartialDictField`
 ------------------
 
-**Signature:** `PartialDictField(included_keys, value_field=None, unicode_options=None)`
+**Signature**::
+
+    PartialDictField(included_keys, value_field=None, unicode_options=None)
 
 A dict field whose values are filtered to only include values for the specified keys.
 
