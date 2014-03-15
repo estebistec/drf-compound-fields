@@ -3,9 +3,10 @@
 History
 -------
 
-0.2.0 (2014-03-10)
+0.2.0 (2014-03-16)
 ++++++++++++++++++
 
+* Documentation (#3)
 * Collect messages of nested errors, instead of error objects (#12)
 * Add ListOrItemField type (#5, #11)
 * Fix PartialDictField validation and handling of badly-typed values
