@@ -28,7 +28,28 @@ This package expands on that and provides fields allowing:
 * Dictionaries of simple and object types.
 * Partial dictionaries which include keys specified in a list.
 
-See the project `documentation <http://drf-compound-fields.rtfd.org>`_ for more information.
+A quick example::
+
+    from drf_compound_fields.fields import DictField
+    from drf_compound_fields.fields import ListField
+    from drf_compound_fields.fields import ListOrItemField
+    from drf_compound_fields.fields import ListField
+    from rest_framework import serializers
+
+    class EmailContact(serializers.Serializer):
+        email = serializers.EmailField()
+        verified = serializers.BooleanField()
+
+    class UserProfile(serializers.Serializer):
+        username = serializers.CharField()
+        email_contacts = EmailContact(many=True)  # List of objects: possible with REST-framework alone
+        # This is the new stuff:
+        skills = ListField(serializers.CharField())  # E.g., ["javascript", "python", "ruby"]
+        name = ListOrItemField(serializers.CharField())  # E.g., "Prince" or ["John", "Smith"]
+        bookmarks = DictField(serializers.URLField())  # E.g., {"./": "http://slashdot.org"}
+        measurements = PartialDictField(included_keys=['height', 'weight'], serializers.IntegerField())
+
+See the :doc:`usage <usage>` for more information.
 
 Project info
 ============
