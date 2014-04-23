@@ -50,7 +50,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
     name='drf-compound-fields',
-    version='0.2.0',
+    version='0.2.1',
     description='Django-REST-framework serializer fields for compound types.',
     long_description=readme + '\n\n' + history,
     author='Steven Cummings',
@@ -63,8 +63,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'Django==1.6.2',
-        'djangorestframework==2.3.13'
+        'djangorestframework<3'
     ],
     test_suite='tests',
     tests_require=['pytest'],
