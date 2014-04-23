@@ -6,6 +6,11 @@ History
 0.2.1 (2014-04-23)
 ++++++++++++++++++
 
+Loosen dependency versions
+
+* Remove explicit dependency on Django
+* Loosen rest-framework to any version before 3
+
 0.2.0 (2014-03-16)
 ++++++++++++++++++
 
