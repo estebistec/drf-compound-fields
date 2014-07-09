@@ -122,7 +122,7 @@ def test_validate_elements_valid():
     """
     field = ListField(CharField(max_length=5))
     try:
-        field.validate(["a", "b", "c"])
+        field.run_validators(["a", "b", "c"])
     except ValidationError:
         assert False, "ValidationError was raised"
 
@@ -134,4 +134,15 @@ def test_validate_elements_invalid():
     """
     field = ListField(CharField(max_length=5))
     with pytest.raises(ValidationError):
-        field.validate(["012345", "012345"])
+        field.run_validators(["012345", "012345"])
+
+def test_validate_not_required_non_list():
+    """
+    When a ListField is given a null value and is not required, do not raise a ValidationError.
+    """
+    field = ListField(required=False)
+
+    try:
+        field.validate(None)
+    except ValidationError as e:
+        assert False, "ValidationError was raised"

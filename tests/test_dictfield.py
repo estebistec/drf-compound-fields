@@ -111,7 +111,7 @@ def test_validate_elements_valid():
     """
     field = DictField(CharField(max_length=5))
     try:
-        field.validate({"a": "a", "b": "b", "c": "c"})
+        field.run_validators({"a": "a", "b": "b", "c": "c"})
     except ValidationError:
         assert False, "ValidationError was raised"
 
@@ -123,4 +123,16 @@ def test_validate_elements_invalid():
     """
     field = DictField(CharField(max_length=5))
     with pytest.raises(ValidationError):
-        field.validate({"a": "012345", "b": "012345"})
+        field.run_validators({"a": "012345", "b": "012345"})
+
+def test_missing_not_required_dict():
+    """
+    When a DictField do not require a value, then validate should not raise a
+    ValidationError on a missing (None) value.
+    """
+    field = DictField(required=False)
+
+    try:
+       field.validate(None)
+    except ValidationError:
+       assert False, "ValidationError was raised"

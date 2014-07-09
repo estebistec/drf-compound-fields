@@ -84,6 +84,6 @@ def test_validate_non_included_keys():
                              required=False)
     data = {'b': '123456'}
     try:
-        field.validate(data)
+        field.run_validators(data)
     except ValidationError:
         assert False, 'Got a ValidationError for a non-included key'

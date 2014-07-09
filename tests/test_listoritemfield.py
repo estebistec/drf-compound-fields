@@ -85,7 +85,7 @@ def test_invalid_item():
     """
     field = ListOrItemField(CharField(max_length=5))
     with pytest.raises(ValidationError):
-        field.validate('123456')
+        field.run_validators('123456')
 
 
 def test_list_value_invalid_items():
@@ -94,6 +94,19 @@ def test_list_value_invalid_items():
     ValidationError.
     """
     field = ListOrItemField(CharField(max_length=5))
-    with pytest.raises(ValidationError) as e:
-        field.validate(['12345', '123456'])
-        assert [1] == e.messages[0].keys()
+    try:
+        field.run_validators(['12345', '123456'])
+        assert False, 'Expected ValidationError'
+    except ValidationError as e:
+        assert [1] == list(e.messages[0].keys())
+
+def test_validate_not_required_missing():
+    """
+    When given a null value and is not required, do not raise a ValidationError
+    """
+    field = ListOrItemField(required=False)
+
+    try:
+        field.validate(None)
+    except ValidationError:
+        assert False, "ValidationError was raised"

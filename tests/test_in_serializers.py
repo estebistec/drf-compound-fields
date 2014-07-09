@@ -25,10 +25,19 @@ from rest_framework.compat import six
 
 from drf_compound_fields.fields import DictField
 from drf_compound_fields.fields import ListField
+from drf_compound_fields.fields import ListOrItemField
 
 
 class ListSerializer(serializers.Serializer):
     emails = ListField(serializers.EmailField(), required=False)
+
+
+class EmbeddedSerializer(serializers.Serializer):
+    value = serializers.EmailField()
+
+
+class ContainerSerializer(serializers.Serializer):
+    embedded = ListOrItemField(EmbeddedSerializer())
 
 
 def test_non_list():
@@ -45,6 +54,14 @@ def test_invalid_list_item():
     assert serializer.errors['emails'], 'Invalid list-item errors should be non-empty {0}'.format(
         serializer.errors['emails'])
     assert [1] == list(six.iterkeys(serializer.errors['emails'][0]))
+
+
+def test_invalid_embedded_list():
+    assert not ContainerSerializer(data={'embedded': [{'value': 'notAnInteger'}]}).is_valid()
+
+
+def test_invalid_embedded_item():
+    assert not ContainerSerializer(data={'embedded': {'value': 'notAnInteger'}}).is_valid()
 
 
 def test_empty_list():

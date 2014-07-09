@@ -3,6 +3,18 @@
 History
 -------
 
+0.2.2 (2014-08-10)
+++++++++++++++++++
+
+Correct validation behaviors when fields are used in embedded serializers. Also correction to the
+`list` and `dict` type checks for `None` values.
+
+* Implement `initialize` and `field_from_native` to ensure proper validation in embedded
+  serializers.
+* Give the fields distinct `validate` and `run_validators` implementations that don't call each
+  other.
+* Don't apply the `list` and `dict` type checks for `None` values.
+
 0.2.1 (2014-04-23)
 ++++++++++++++++++
 
