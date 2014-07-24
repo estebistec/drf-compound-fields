@@ -63,6 +63,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
+        'Django',
         'djangorestframework<3'
     ],
     test_suite='tests',
