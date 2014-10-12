@@ -83,7 +83,6 @@ class ListField(WritableField):
             if errors:
                 raise NestedValidationError(errors)
 
-
     def validate_is_list(self, value):
         if value is not None and not isinstance(value, list):
             raise ValidationError(

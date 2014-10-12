@@ -11,13 +11,7 @@ Tests for `drf_compound_fields.fields.DictField`.
 """
 
 
-# Django settings:
-import os
-os.environ['DJANGO_SETTINGS_MODULE'] = __name__
-
-from django.conf.global_settings import CACHES  # NOQA
-SECRET_KEY = 's3cr3t'
-
+from . import test_settings
 
 from datetime import date
 
