@@ -30,6 +30,10 @@ class EmbeddedSerializer(serializers.Serializer):
     value = serializers.EmailField()
 
 
+class ContainerListSerializer(serializers.Serializer):
+    embedded = ListField(EmbeddedSerializer())
+
+
 class ContainerSerializer(serializers.Serializer):
     embedded = ListOrItemField(EmbeddedSerializer())
 
@@ -66,6 +70,12 @@ def test_empty_list():
 def test_valid_list():
     serializer = ListSerializer(data={'emails': ['some.where@out.there']})
     assert serializer.is_valid(), 'Valid list should be allowed'
+
+
+def test_invalid_list_embedded():
+    serializer = ContainerListSerializer(data={'embedded': [{'value': 'text'}]})
+    assert not serializer.is_valid(), 'List field should be invalid'
+    assert 'embedded' in serializer.errors, 'Invalid field value should produce a field error'
 
 
 class DictSerializer(serializers.Serializer):
