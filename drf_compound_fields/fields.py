@@ -47,10 +47,13 @@ class ListField(WritableField):
     def from_native(self, data):
         self.validate_is_list(data)
         if self.item_field and data:
-            return [
+            values = [
                 self.item_field.from_native(item_data)
                 for item_data in data
             ]
+            if self.item_field.errors:
+                raise NestedValidationError(self.item_field.errors)
+            return values
         return data
 
     def validate(self, value):
