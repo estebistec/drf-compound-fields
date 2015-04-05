@@ -3,6 +3,11 @@
 History
 -------
 
+1.0.0 (2015-04-10)
+++++++++++++++++++
+* Upgrade ListOrItemField and PartialDictField for django-rest-framework 3.0 and beyond
+* Remove ListField and DictField, as they now come with django-rest-framework
+
 0.2.2 (2014-08-10)
 ++++++++++++++++++
 

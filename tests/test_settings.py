@@ -18,3 +18,6 @@ settings.configure(
 import django
 if hasattr(django, 'setup'):
     django.setup()
+
+
+SECRET_KEY = 's3cr3t'
