@@ -35,8 +35,9 @@ class ListOrItemField(Field):
     def to_internal_value(self, data):
         if isinstance(data, list):
             return self.list_field.to_internal_value(data)
+        # Force field validation. Not necessary on the list_field since DRF calls it recursively.
+        self.item_field.run_validation(data)
         return self.item_field.to_internal_value(data)
-
 
 class PartialDictField(DictField):
     """
