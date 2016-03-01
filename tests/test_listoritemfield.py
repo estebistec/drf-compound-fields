@@ -15,52 +15,53 @@ from . import test_settings
 
 from datetime import date
 
-from django.core.exceptions import ValidationError
+from rest_framework.serializers import ValidationError
 from rest_framework import ISO_8601
-from rest_framework.fields import CharField
-from rest_framework.fields import DateField
+from rest_framework.serializers import CharField
+from rest_framework.serializers import DateField
+from rest_framework.serializers import Serializer
 import pytest
 
 from drf_compound_fields.fields import ListOrItemField
 
 
-def test_to_native_list():
+def test_to_representation_list():
     """
-    When given a valid list, the ListOrItemField to_native method should utilize the list to-native
+    When given a valid list, the ListOrItemField to_representation method should utilize the list to-native
     logic.
     """
-    field = ListOrItemField(DateField(format=ISO_8601))
-    data = field.to_native([date.today()])
+    field = ListOrItemField(child=DateField(format=ISO_8601))
+    data = field.to_representation([date.today()])
     assert [date.today().isoformat()] == data
 
 
-def test_from_native_list():
+def test_to_internal_value_list():
     """
-    When given a valid list, the ListOrItemField from_native method should utilize the list
+    When given a valid list, the ListOrItemField to_internal_value method should utilize the list
     from-native logic.
     """
-    field = ListOrItemField(DateField(format=ISO_8601))
-    data = field.from_native([date.today().isoformat()])
+    field = ListOrItemField(child=DateField(format=ISO_8601))
+    data = field.to_internal_value([date.today().isoformat()])
     assert [date.today()] == data
 
 
-def test_to_native_item():
+def test_to_representation_item():
     """
-    When given a valid item, the ListOrItemField to_native method should utilize the item to-native
+    When given a valid item, the ListOrItemField to_representation method should utilize the item to-native
     logic.
     """
-    field = ListOrItemField(DateField(format=ISO_8601))
-    data = field.to_native(date.today())
+    field = ListOrItemField(child=DateField(format=ISO_8601))
+    data = field.to_representation(date.today())
     assert date.today().isoformat() == data
 
 
-def test_from_native_item():
+def test_to_internal_value_item():
     """
-    When given a valid item, the ListOrItemField from_native method should utilize the item
+    When given a valid item, the ListOrItemField to_internal_value method should utilize the item
     from-native logic.
     """
-    field = ListOrItemField(DateField(format=ISO_8601))
-    data = field.from_native(date.today().isoformat())
+    field = ListOrItemField(child=DateField(format=ISO_8601))
+    data = field.to_internal_value(date.today().isoformat())
     assert date.today() == data
 
 
@@ -68,18 +69,18 @@ def test_validate_required_missing():
     """
     When given a None value the ListOrItemField validate method should raise a ValidationError.
     """
-    field = ListOrItemField()
+    field = ListOrItemField(child=DateField(format=ISO_8601))
     with pytest.raises(ValidationError):
-        field.validate(None)
+        field.to_internal_value(None)
 
 
 def test_invalid_item():
     """
     When given an invalid value the ListOrItemField validate method should raise a ValidationError.
     """
-    field = ListOrItemField(CharField(max_length=5))
+    field = ListOrItemField(child=CharField(max_length=5))
     with pytest.raises(ValidationError):
-        field.run_validators('123456')
+        field.to_internal_value('123456')
 
 
 def test_list_value_invalid_items():
@@ -87,20 +88,6 @@ def test_list_value_invalid_items():
     When given a list with an invalid value the ListOrItemField validate method should raise a
     ValidationError.
     """
-    field = ListOrItemField(CharField(max_length=5))
-    try:
-        field.run_validators(['12345', '123456'])
-        assert False, 'Expected ValidationError'
-    except ValidationError as e:
-        assert [1] == list(e.messages[0].keys())
-
-def test_validate_not_required_missing():
-    """
-    When given a null value and is not required, do not raise a ValidationError
-    """
-    field = ListOrItemField(required=False)
-
-    try:
-        field.validate(None)
-    except ValidationError:
-        assert False, "ValidationError was raised"
+    field = ListOrItemField(child=CharField(max_length=5))
+    with pytest.raises(ValidationError):
+        field.to_internal_value(['12345', '123456'])

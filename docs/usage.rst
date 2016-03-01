@@ -146,12 +146,12 @@ Output::
 
 **Signature**::
 
-    DictField(value_field=None, unicode_options=None)
+    DictField(child=None, unicode_options=None)
 
 A field whose values are dicts of values described by the given value field. The value field
 can be another field type (e.g., CharField) or a serializer.
 
-If `value_field` is not given, then the `dict` values are passed through-as-is, and can be
+If `child` is not given, then the `dict` values are passed through-as-is, and can be
 anything. Note that in this case, any non-native `dict` values wouldn't be properly prepared for
 data rendering.
 
@@ -232,7 +232,7 @@ Output::
 
 **Signature**::
 
-    PartialDictField(included_keys, value_field=None, unicode_options=None)
+    PartialDictField(included_keys, child=None, unicode_options=None)
 
 A dict field whose values are filtered to only include values for the specified keys.
 
