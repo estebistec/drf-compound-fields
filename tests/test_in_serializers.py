@@ -15,7 +15,6 @@ and validation.
 from . import test_settings
 
 from rest_framework import serializers
-from rest_framework.compat import six
 
 from drf_compound_fields.fields import DictField
 from drf_compound_fields.fields import ListField

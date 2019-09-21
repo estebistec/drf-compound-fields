@@ -7,7 +7,6 @@ fields.
 """
 
 
-from rest_framework.compat import six
 from rest_framework.serializers import DictField
 from rest_framework.serializers import Field
 from rest_framework.serializers import ListField
@@ -58,7 +57,7 @@ class PartialDictField(DictField):
         if isinstance(value, dict):
             return dict(
                 (k, v)
-                for k, v in six.iteritems(value)
+                for k, v in value.items()
                 if k in self.included_keys
             )
         return value

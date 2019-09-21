@@ -3,6 +3,11 @@
 History
 -------
 
+2.0.0 (2019-09-??)
+++++++++++++++++++
+* Deprecate Python 2 support
+* Fix #29
+
 1.0.0 (2016-02-29)
 ++++++++++++++++++
 * Upgrade ListOrItemField and PartialDictField for django-rest-framework 3.0 and beyond
