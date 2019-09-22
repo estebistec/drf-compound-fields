@@ -50,7 +50,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
     name='drf-compound-fields',
-    version='2.0.0',
+    version='2.0.1',
     description='Django-REST-framework serializer fields for compound types.',
     long_description=readme + '\n\n' + history,
     author='Steven Cummings',
