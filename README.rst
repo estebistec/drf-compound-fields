@@ -49,8 +49,6 @@ A quick example::
         bookmarks = DictField(serializers.URLField())  # E.g., {"./": "http://slashdot.org"}
         measurements = PartialDictField(included_keys=['height', 'weight'], serializers.IntegerField())
 
-See the :doc:`usage <usage>` for more information.
-
 Project info
 ============
 
